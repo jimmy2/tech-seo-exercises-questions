@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Inlined critical CSS -->
+  <style>
+    /* Content from styles1.css */
+    body {
+      font-family: 'Roboto', sans-serif;
+      color: white;
+      background-color: black;
+      margin: 0;
+      padding: 0;
+    }
+
+    header, nav, main, footer {
+      padding: 20px;
+    }
+
+    /* Content from styles2.css */
+    p {
+      font-size: 24px;
+      text-align: center;
+    }
+
+    @keyframes color-change {
+      0% { color: red; }
+      50% { color: green; }
+      100% { color: blue; }
+    }
+
+    #random-number {
+      animation: color-change 5s infinite;
+    }
+    /* Content from styles3.css */
+    header {
+      background-color: navy;
+      padding: 10px;
+    }
+
+    nav {
+      background-color: lightgray;
+      padding: 10px;
+    }
+
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    nav ul li {
+      display: inline;
+      margin-right: 10px;
+    }
+
+    main {
+      padding: 10px;
+    }
+
+    footer {
+      background-color: lightgray;
+      padding: 10px;
+      text-align: center;
+    }
+    /* Content from styles4.css */
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+    /* Content from styles5.css */
+    section {
+      margin: 10px 0;
+    }
+
+    #header-paragraph {
+      text-align: center;
+    }
+
+    #product-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #product-list li {
+      background-color: lightgrey;
+      margin: 5px 0;
+      padding: 10px;
+      cursor: pointer;
+      display: block;
+    }
+
+    #product-list li:hover {
+      background-color: darkgrey;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Render Blocking Resources Example</h1>
+    <p id="header-paragraph">Welcome to our website!</p>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+  <main>
+    <section>
+      <h2>About Us</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </section>
+    <section>
+      <h2>Our Products</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <ul id="product-list">
+        <li>Product 1</li>
+        <li>Product 2</li>
+        <li>Product 3</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Contact Us</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </section>
+    <p id="random-number"></p>
+    <div id="api-data"></div>
+  </main>
+  <footer>
+    <p>Footer content</p>
+  </footer>
+  <!-- Inlined critical JS -->
+  <script>
+    /* Content from script1.js */
+    function getRandomColor() {
+      var letters = '0123456789ABCDEF';
+      var color = '#';
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    window.addEventListener('load', function() {
+      setInterval(function() {
+        document.body.style.backgroundColor = getRandomColor();
+      }, 5000);
+    });
+
+    
+    /* Content from script6.js */
+    window.addEventListener('load', function() {
+      var productList = document.getElementById("product-list");
+      for (var i = 4; i <= 6; i++) {
+        var newListItem = document.createElement("li");
+        newListItem.innerText = "Product " + i;
+        productList.appendChild(newListItem);
+      }
+      var productItems = productList.getElementsByTagName('li');
+      for (var i = 0; i < productItems.length; i++) {
+        productItems[i].addEventListener('click', function(event) {
+          var listItem = event.target;
+          fetch('https://jsonplaceholder.typicode.com/posts/' + Math.floor(Math.random() * 100 + 1))
+            .then(response => response.json())
+            .then(json => {
+              var bodyPara = document.createElement('p');
+              bodyPara.innerText = json.body;
+              listItem.appendChild(bodyPara);
+            });
+        });
+      }
+    });
+  </script>
+
+  <script src="script2.js" async></script>
+  <script src="script3.js" async></script>
+  <script src="script4.js" async></script>
+  <script src="script5.js" async></script>
+
+</body>
+</html>
+</html>
